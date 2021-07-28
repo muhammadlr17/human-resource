@@ -33,4 +33,10 @@ class HomeController extends Controller
             return redirect()->to('logout');
         }
     }
+
+    public function profile()
+    {
+        $user = Auth::user();
+        return view('profile', compact('user'));
+    }
 }

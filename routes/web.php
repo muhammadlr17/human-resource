@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\DepartementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,13 +26,18 @@ Auth::routes();
 Route::middleware(['auth'])->group(function () {
  
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('profile', [App\Http\Controllers\HomeController::class, 'profile']);
  
     Route::middleware(['admin'])->group(function () {
         Route::get('admin', [AdminController::class, 'index']);
+        //Route::get('admin/profile', [AdminController::class, 'profile']);
+        Route::resource('companies', CompanyController::class);
+        Route::resource('departements', DepartementController::class);
     });
  
     Route::middleware(['user'])->group(function () {
         Route::get('user', [UserController::class, 'index']);
+        //Route::get('user/profile', [UserController::class, 'profile']);
     });
  
     Route::get('/logout', function() {
