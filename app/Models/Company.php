@@ -15,4 +15,9 @@ class Company extends Model
         'logo',
         'webiste_url',
     ];
+
+    public function employees()
+    {
+        return $this->hasMany(User::class);
+    }
 }

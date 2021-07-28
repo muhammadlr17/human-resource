@@ -1,10 +1,10 @@
 @extends('layouts.main')
 
-@section('title', '| Departement')
+@section('title', '| Employee')
 @section('content')
     <div class="panel panel-headline">
         <div class="panel-heading">
-            <h3 class="panel-title">Departements</h3>
+            <h3 class="panel-title">Employees</h3>
         </div>
         <div class="panel-body">
             <div class="row">
@@ -13,25 +13,41 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Name</th>
-                                <th>Description</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Company</th>
+                                <th>Departement</th>
+                                <th>Role</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if ($departements->count() > 0)
-                                @foreach ($departements as $departement)
+                            @if ($employees->count() > 0)
+                                @foreach ($employees as $employee)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $departement->name }}</td>
-                                        <td>{{ $departement->description }}</td>
+                                        <td>{{ $employee->first_name }}</td>
+                                        <td>{{ $employee->last_name }}</td>
+                                        <td>{{ $employee->username }}</td>
+                                        <td>{{ $employee->email }}</td>
+                                        <td>{{ $employee->phone }}</td>
+                                        <td><a
+                                                href="{{ url('employees/company/' . $employee->company->id) }}">{{ $employee->company->name }}</a>
+                                        </td>
+                                        <td><a
+                                                href="{{ url('employees/departement/' . $employee->departement->id) }}">{{ $employee->departement->name }}</a>
+                                        </td>
+                                        <td>{{ $employee->role }}</td>
                                         <td class="text-center">
-                                            <a href="{{ url('departements/' . $departement->id) }}"
+                                            <a href="{{ url('employees/' . $employee->id) }}"
                                                 class="btn btn-xs btn-info text-light"><span class="lnr lnr-eye"></span></a>
-                                            <a href="{{ url('departements/' . $departement->id . '/edit') }}"
+                                            <a href="{{ url('employees/' . $employee->id . '/edit') }}"
                                                 class="btn btn-xs btn-warning text-light"><span
                                                     class="lnr lnr-pencil"></span></a>
-                                            <form method="POST" action="{{ url('departements/' . $departement->id) }}"
+                                            <form method="POST" action="{{ url('employees/' . $employee->id) }}"
                                                 style="display: inline" onsubmit="return confirm('Yakin hapus data?')">
                                                 @csrf
                                                 <input type="hidden" name="_method" value="DELETE">

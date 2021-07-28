@@ -19,32 +19,22 @@
                     <li><a href="{{ url('employees') }}"
                             class="{{ request()->is('employees') ? ' active' : '' }}"><i class="lnr lnr-users"></i>
                             <span>Employees</span></a></li>
-                    <li>
-                        <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-cog"></i>
-                            <span>Settings</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-                        <div id="subPages" class="collapse ">
-                            <ul class="nav">
-                                <li><a href="{{ url('profile') }}"
-                                        class="{{ request()->is('profile') ? ' active' : '' }}">Profile</a></li>
-                            </ul>
-                        </div>
-                    </li>
                 @endif
                 @if (Auth::user()->role == 'user')
                     <li><a href="{{ url('user') }}" class="{{ request()->is('user') ? ' active' : '' }}"><i
                                 class="lnr lnr-home"></i>
                             <span>Dashboard</span></a>
                     </li>
-                    <li>
-                        <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-cog"></i>
-                            <span>Settings</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-                        <div id="subPages" class="collapse ">
-                            <ul class="nav">
-                                <li><a href="{{ url('profile') }}" class="">Profile</a></li>
-                            </ul>
-                        </div>
-                    </li>
                 @endif
+                <li>
+                    <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-cog"></i>
+                        <span>Settings</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                    <div id="subPages" class="collapse ">
+                        <ul class="nav">
+                            <li><a href="{{ url('profile') }}" class="">Profile</a></li>
+                        </ul>
+                    </div>
+                </li>
             </ul>
         </nav>
     </div>

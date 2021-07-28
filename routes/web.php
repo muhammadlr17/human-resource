@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DepartementController;
+use App\Http\Controllers\EmployeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,9 @@ Route::middleware(['auth'])->group(function () {
         //Route::get('admin/profile', [AdminController::class, 'profile']);
         Route::resource('companies', CompanyController::class);
         Route::resource('departements', DepartementController::class);
+        Route::get('employees/company/{id?}', [EmployeeController::class,'employeesByCompany']);
+        Route::get('employees/departement/{id?}', [EmployeeController::class,'employeesByDepartement']);
+        Route::resource('employees', EmployeeController::class);
     });
  
     Route::middleware(['user'])->group(function () {

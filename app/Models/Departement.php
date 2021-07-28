@@ -13,4 +13,9 @@ class Departement extends Model
         'name',
         'description',
     ];
+
+    public function employees()
+    {
+        return $this->hasMany(User::class);
+    }
 }

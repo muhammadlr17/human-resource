@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Company;
+use App\Models\Departement;
 
 class EmployeeController extends Controller
 {
@@ -13,7 +16,25 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        
+        $employees = User::all();
+        return view('admin.employee.index', compact(
+            'employees'
+        ));
+    }
+
+    public function employeesByCompany($id)
+    {
+        $employees = Company::find($id)->employees;
+        return view('admin.employee.employeesByCompany', compact(
+            'employees'
+        ));
+    }
+    public function employeesByDepartement($id)
+    {
+        $employees = Departement::find($id)->employees;
+        return view('admin.employee.employeesByDepartement', compact(
+            'employees'
+        ));
     }
 
     /**
