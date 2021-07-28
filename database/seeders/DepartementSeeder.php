@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\Departement;
 
 class DepartementSeeder extends Seeder
 {
@@ -13,6 +14,20 @@ class DepartementSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $departements = [
+            [
+                'name' => 'HR',
+                'description' => 'Selecting job applicants',
+            ],
+            [
+                'name' => 'Marketing',
+                'description' => 'Do promotion',
+            ],
+            
+        ];
+
+        foreach ($departements as $departement) {
+            Departement::create($departement);
+        }
     }
 }
