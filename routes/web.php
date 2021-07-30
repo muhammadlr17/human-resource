@@ -32,11 +32,19 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['admin'])->group(function () {
         Route::get('admin', [AdminController::class, 'index']);
         //Route::get('admin/profile', [AdminController::class, 'profile']);
+        
+        //Company
         Route::resource('companies', CompanyController::class);
+        
+        //Departement
         Route::resource('departements', DepartementController::class);
-        Route::get('employees/company/{id?}', [EmployeeController::class,'employeesByCompany']);
-        Route::get('employees/departement/{id?}', [EmployeeController::class,'employeesByDepartement']);
-        Route::resource('employees', EmployeeController::class);
+        
+        //Employee
+        Route::get('employees/company/{id?}',       [EmployeeController::class,'employeesByCompany']);
+        Route::get('employees/departement/{id?}',   [EmployeeController::class,'employeesByDepartement']);
+        Route::get('employees/trash',               [RuangController::class,'trash']);
+        Route::get('employees/restore/{id?}',       [RuangController::class,'restore']);
+        Route::resource('employees',                EmployeeController::class);
     });
  
     Route::middleware(['user'])->group(function () {

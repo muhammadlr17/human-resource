@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/font-awesome/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/linearicons/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/chartist/css/chartist-custom.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/DataTables/datatables.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/DataTables/datatables.min.css') }}">
 
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
@@ -56,10 +56,21 @@
     <script src="{{ asset('assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/chartist/js/chartist.min.js') }}"></script>
     <script src="{{ asset('assets/scripts/klorofil-common.js') }}"></script>
-    <script type="text/javascript" charset="utf8" src="{{ asset('assets/vendor/DataTables/datatables.js') }}"></script>
+    <script type="text/javascript" charset="utf8" src="{{ asset('assets/vendor/DataTables/datatables.min.js') }}">
+    </script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#myTable').DataTable();
+            $('#myTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [{
+                        extend: 'pdfHtml5',
+                        orientation: 'potrait',
+                        pageSize: 'LEGAL',
+                        download: 'open',
+                    },
+                    'copy', 'csv', 'excel', 'print'
+                ]
+            });
         });
     </script>
 
