@@ -16,9 +16,10 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
-            $table->string('email', 50);
+            $table->string('email', 50)->unique();
             $table->string('logo')->nullable();
             $table->string('website_url')->nullable();
+            $table->string('slug', 100)->unique();
             $table->timestamps();
             $table->softDeletes();
         });

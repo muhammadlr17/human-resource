@@ -42,8 +42,8 @@ Route::middleware(['auth'])->group(function () {
         //Employee
         Route::get('employees/company/{id?}',       [EmployeeController::class,'employeesByCompany']);
         Route::get('employees/departement/{id?}',   [EmployeeController::class,'employeesByDepartement']);
-        Route::get('employees/trash',               [RuangController::class,'trash']);
-        Route::get('employees/restore/{id?}',       [RuangController::class,'restore']);
+        Route::get('employees/trash',               [EmployeeController::class,'trash']);
+        Route::get('employees/restore/{id?}',       [EmployeeController::class,'restore']);
         Route::resource('employees',                EmployeeController::class);
     });
  

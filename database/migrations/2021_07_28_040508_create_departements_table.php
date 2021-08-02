@@ -17,6 +17,7 @@ class CreateDepartementsTable extends Migration
             $table->id();
             $table->string('name', 100);
             $table->string('description');
+            $table->string('slug', 100)->unique();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -20,12 +20,14 @@ class CompanySeeder extends Seeder
                 'email' => 'alton.indonesia@gmail.com',
                 'logo' => '',
                 'website_url' => 'https://site.alt-on.net',
+                'slug' => 'alton',
             ],
             [
                 'name' => 'Shoope',
                 'email' => 'support@shopee.co.id',
                 'logo' => '',
                 'website_url' => 'https://shoope.co.id',
+                'slug' => 'shoope',
             ]
         ];
 

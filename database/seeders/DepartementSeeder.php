@@ -18,10 +18,12 @@ class DepartementSeeder extends Seeder
             [
                 'name' => 'HR',
                 'description' => 'Selecting job applicants',
+                'slug' => 'hr',
             ],
             [
                 'name' => 'Marketing',
                 'description' => 'Do promotion',
+                'slug' => 'marketing',
             ],
             
         ];

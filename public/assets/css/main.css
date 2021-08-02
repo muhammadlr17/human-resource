@@ -1573,7 +1573,7 @@ ul.activity-list>li .timestamp {
     -moz-border-radius: 5px;
     border-radius: 5px;
     width: 80%;
-    height: 550px;
+    height: 575px;
     margin: 0 auto;
     background-color: #fff;
 }
@@ -1668,11 +1668,11 @@ ul.activity-list>li .timestamp {
 }
 
 .auth-box-register .header {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .auth-box-register .lead {
-    margin-top: 5px;
+    margin-top: 3px;
     font-size: 18px;
     text-align: center;
 }

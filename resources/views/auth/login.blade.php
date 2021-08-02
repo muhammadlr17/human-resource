@@ -15,11 +15,11 @@
                         <form class="form-auth-small" method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="form-group">
-                                <label for="signin-email" class="control-label sr-only">Email</label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email"
-                                    value="{{ old('email') }}" required autocomplete="email" autofocus id="signin-email"
-                                    placeholder="Email">
-                                @error('email')
+                                <label for="signin-email" class="control-label sr-only">Username</label>
+                                <input type="text" class="form-control @error('email') is-invalid @enderror" name="username"
+                                    value="{{ old('username') }}" required autocomplete="username" autofocus
+                                    id="signin-email" placeholder="Username">
+                                @error('username')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

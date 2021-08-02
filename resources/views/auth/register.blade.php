@@ -40,6 +40,18 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="username" class="control-label sr-only">Userame</label>
+                                <input type="text" class="form-control input-sm @error('username') is-invalid @enderror"
+                                    name="username" value="{{ old('username') }}" required autocomplete="username"
+                                    autofocus id="username" placeholder="Username">
+                                @error('username')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
                                 <label for="signin-email" class="control-label sr-only">Email</label>
                                 <input type="email" class="form-control input-sm @error('email') is-invalid @enderror"
                                     name="email" value="{{ old('email') }}" required autocomplete="email" autofocus
