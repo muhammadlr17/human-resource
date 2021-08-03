@@ -45,10 +45,11 @@ class EmployeeController extends Controller
      */
     public function create()
     {
+        $employee = new User;
         $companies = Company::all();
         $departements = Departement::all();
         return view('admin.employee.create', compact(
-            'companies','departements'
+            'employee','companies','departements'
         ));
     }
 
@@ -81,9 +82,13 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $employee)
     {
-        //
+        $companies = Company::all();
+        $departements = Departement::all();   
+        return view('admin.employee.edit', compact(
+            'employee','companies','departements'
+        ));
     }
 
     /**

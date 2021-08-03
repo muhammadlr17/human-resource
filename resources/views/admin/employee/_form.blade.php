@@ -3,7 +3,7 @@
         <div class="form-group">
             <label for="first_name" class="control-label sr-only">First Name</label>
             <input type="text" class="form-control input-sm @error('first_name') is-invalid @enderror" name="first_name"
-                value="{{ old('first_name') }}" required autocomplete="first_name" autofocus id="first_name"
+                value="{{ $employee->first_name }}" required autocomplete="first_name" autofocus id="first_name"
                 placeholder="First Name">
             @error('first_name')
                 <span class="invalid-feedback" role="alert">
@@ -16,7 +16,7 @@
         <div class="form-group">
             <label for="last_name" class="control-label sr-only">Last Name</label>
             <input type="text" class="form-control input-sm @error('last_name') is-invalid @enderror" name="last_name"
-                value="{{ old('last_name') }}" required autocomplete="last_name" autofocus id="last_name"
+                value="{{ $employee->last_name }}" required autocomplete="last_name" autofocus id="last_name"
                 placeholder="Last Name">
             @error('last_name')
                 <span class="invalid-feedback" role="alert">
@@ -30,7 +30,8 @@
 <div class="form-group">
     <label for="username" class="control-label sr-only">Username</label>
     <input type="text" class="form-control input-sm @error('username') is-invalid @enderror" name="username"
-        value="{{ old('username') }}" required autocomplete="username" autofocus id="username" placeholder="Username">
+        value="{{ $employee->username }}" required autocomplete="username" autofocus id="username"
+        placeholder="Username">
     @error('username')
         <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -77,7 +78,7 @@
     <input id="phone" type="text" class="form-control input-sm @error('phone') is-invalid @enderror" name="phone"
         required placeholder="Phone" maxlength="13">
 
-    @error('telepon')
+    @error('phone')
         <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
         </span>
@@ -88,7 +89,12 @@
     <select class="form-control input-sm @error('company_id') is-invalid @enderror" name="company_id">
         <option value="" selected>Your Company</option>
         @foreach ($companies as $company)
-            <option value="{{ $company->id }}">{{ $company->name }}</option>
+            @if ($company->id == $employee->company_id)
+                @php($select = 'selected')
+            @else
+                @php($select = '')
+            @endif
+            <option {{ $select }} value="{{ $company->id }}">{{ $company->name }}</option>
         @endforeach
     </select>
     @error('company_id')

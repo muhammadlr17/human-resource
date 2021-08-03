@@ -29,7 +29,7 @@ class EmployeeRequest extends FormRequest
             'username' => ['required', 'string', 'max:100', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'phone' => ['required', 'string', 'max:13'],
+            'phone' => ['required','numeric','digits_between:10,13'],
             'company_id' => ['required'],
             'departement_id' => ['required'],
         ];
