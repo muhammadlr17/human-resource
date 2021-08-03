@@ -2,7 +2,13 @@
 
 @section('title', '| Employee')
 @section('content')
-
+    @if (Session::has('success'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <i class="fa fa-check-circle"></i> {{ Session::get('success') }}
+        </div>
+    @endif
     <div class="panel panel-headline">
         <div class="panel-heading">
             <h3 class="panel-title">Employees</h3>
@@ -42,12 +48,12 @@
                                             href="{{ url('employees/departement/' . $employee->departement->id) }}">{{ $employee->departement->name }}</a>
                                     </td>
                                     <td class="text-center">
-                                        <a href="{{ url('employees/' . $employee->id) }}"
+                                        <a href="{{ route('employees.show', $employee) }}"
                                             class="btn btn-xs btn-info text-light"><span class="lnr lnr-eye"></span></a>
-                                        <a href="{{ url('employees/' . $employee->id . '/edit') }}"
+                                        <a href="{{ route('employees.edit', $employee) }}"
                                             class="btn btn-xs btn-warning text-light"><span
                                                 class="lnr lnr-pencil"></span></a>
-                                        <form method="POST" action="{{ url('employees/' . $employee->id) }}"
+                                        <form method="POST" action="{{ route('employees.destroy', $employee) }}"
                                             style="display: inline" onsubmit="return confirm('Yakin hapus data?')">
                                             @csrf
                                             <input type="hidden" name="_method" value="DELETE">
@@ -62,4 +68,5 @@
                 </table>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection

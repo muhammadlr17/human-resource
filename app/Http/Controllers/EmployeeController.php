@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\EmployeeRequest;
 use App\Models\User;
 use App\Models\Company;
 use App\Models\Departement;
@@ -44,7 +45,11 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        $companies = Company::all();
+        $departements = Departement::all();
+        return view('admin.employee.create', compact(
+            'companies','departements'
+        ));
     }
 
     /**
@@ -53,9 +58,10 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EmployeeRequest $request)
     {
-        //
+        User::create($request->all());
+        return redirect('employees')->with('success', 'Data berhasil disimpan');
     }
 
     /**
@@ -64,9 +70,9 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $employee)
     {
-        //
+        return view('admin.employee.detail', compact('employee'));
     }
 
     /**

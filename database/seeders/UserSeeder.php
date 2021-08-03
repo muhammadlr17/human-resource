@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
                 'phone' => '087888777999',
                 'company_id' => '1',
                 'departement_id' => '1',
-                'password' => Hash::make('password123'),
+                'password' => 'password123',
                 'role' => 'admin'
             ],
             [
@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
                 'phone' => '08777788097',
                 'company_id' => '1',
                 'departement_id' => '2',
-                'password' => Hash::make('password123'),
+                'password' => 'password123',
                 'role' => 'user'
             ]
         ];

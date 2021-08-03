@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', '| Profile')
+@section('title', '| Detail')
 @section('content')
     <div class="panel panel-profile">
         <div class="clearfix">
@@ -11,7 +11,7 @@
                     <div class="overlay"></div>
                     <div class="profile-main">
                         <img src="{{ asset('assets/img/user-medium.png') }}" class="img-circle" alt="Avatar">
-                        <h3 class="name">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h3>
+                        <h3 class="name">{{ $employee->first_name . ' ' . $employee->last_name }}</h3>
                         <span class="online-status status-available">Available</span>
                     </div>
                     <div class="profile-stat">

@@ -56,4 +56,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Departement::class);
     }
+
+    public function getRouteKeyName()
+    {
+        return 'username';
+    }
+
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = bcrypt($password);
+    }
 }
