@@ -60,7 +60,9 @@
             <!-- END LEFT COLUMN -->
             <!-- RIGHT COLUMN -->
             <div class="profile-right">
-                <h4 class="heading">Samuel's Awards</h4>
+                <h4 class="heading">
+                    <a href="{{ route('employees.index') }}" class=" badge"><i class="lnr lnr-arrow-left"></i> Back</a>
+                </h4>
                 <!-- AWARDS -->
                 <div class="awards">
                     <div class="row">

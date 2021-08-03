@@ -101,7 +101,7 @@
                                     class="form-control input-sm @error('phone') is-invalid @enderror" name="phone" required
                                     placeholder="Phone" maxlength="13">
 
-                                @error('telepon')
+                                @error('phone')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
