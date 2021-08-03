@@ -23,18 +23,18 @@ class EmployeeController extends Controller
         ));
     }
 
-    public function employeesByCompany($id)
+    public function employeesByCompany(Company $company)
     {
-        $employees = Company::find($id)->employees;
+        $employees = $company->employees;
         return view('admin.employee.employeesByCompany', compact(
-            'employees'
+            'employees', 'company'
         ));
     }
-    public function employeesByDepartement($id)
+    public function employeesByDepartement(Departement $departement)
     {
-        $employees = Departement::find($id)->employees;
+        $employees = $departement->employees;
         return view('admin.employee.employeesByDepartement', compact(
-            'employees'
+            'employees', 'departement'
         ));
     }
 

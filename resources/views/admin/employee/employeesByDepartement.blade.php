@@ -2,7 +2,10 @@
 
 @section('title', '| Employee by Company')
 @section('content')
-    <h3 class="page-title">Employees by Departement</h3>
+    <h3 class="page-title">
+        <a href="{{ route('employees.index') }}" class=" badge"><i class="lnr lnr-arrow-left"></i> Back</a>
+        Employees by Departement : <b>{{ $departement->name }}</b>
+    </h3>
     @foreach ($employees as $employee)
         <div class="col-md-4">
             <!-- PANEL NO PADDING -->

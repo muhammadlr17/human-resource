@@ -42,10 +42,10 @@
                                     <td>{{ $employee->last_name }}</td>
                                     <td>{{ $employee->email }}</td>
                                     <td><a
-                                            href="{{ url('employees/company/' . $employee->company->id) }}">{{ $employee->company->name }}</a>
+                                            href="{{ route('employees.company', $employee->company->slug) }}">{{ $employee->company->name }}</a>
                                     </td>
                                     <td><a
-                                            href="{{ url('employees/departement/' . $employee->departement->id) }}">{{ $employee->departement->name }}</a>
+                                            href="{{ route('employees.departement', $employee->departement->slug) }}">{{ $employee->departement->name }}</a>
                                     </td>
                                     <td class="text-center">
                                         <a href="{{ route('employees.show', $employee) }}"

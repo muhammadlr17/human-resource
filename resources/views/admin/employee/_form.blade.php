@@ -49,22 +49,27 @@
     @enderror
 </div>
 
-<div class="form-group">
-    <label for="password" class="control-label sr-only">Password</label>
-    <input id="password" type="password" class="form-control input-sm @error('password') is-invalid @enderror"
-        name="password" required autocomplete="new-password" placeholder="Password">
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="password" class="control-label sr-only">Password</label>
+            <input id="password" type="password" class="form-control input-sm @error('password') is-invalid @enderror"
+                name="password" required autocomplete="new-password" placeholder="Password">
 
-    @error('password')
-        <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-        </span>
-    @enderror
-</div>
-
-<div class="form-group">
-    <label for="password" class="control-label sr-only">Password</label>
-    <input id="password-confirm" type="password" class="form-control input-sm" name="password_confirmation" required
-        autocomplete="new-password" placeholder="Confirm Password">
+            @error('password')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="password" class="control-label sr-only">Password</label>
+            <input id="password-confirm" type="password" class="form-control input-sm" name="password_confirmation"
+                required autocomplete="new-password" placeholder="Confirm Password">
+        </div>
+    </div>
 </div>
 
 <div class="form-group">
