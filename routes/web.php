@@ -40,8 +40,8 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('departements', DepartementController::class);
         
         //Employee
-        Route::get('employees/company/{company:slug}',       [EmployeeController::class,'employeesByCompany'])->name('employees.company');
-        Route::get('employees/departement/{departement:slug}',   [EmployeeController::class,'employeesByDepartement'])->name('employees.departement');
+        Route::get('employees/{company:slug}',       [EmployeeController::class,'employeesByCompany'])->name('employees.company');
+        Route::get('employees/{departement:slug}',   [EmployeeController::class,'employeesByDepartement'])->name('employees.departement');
         Route::get('employees/trash',                [EmployeeController::class,'trash']);
         Route::get('employees/restore/{id?}',        [EmployeeController::class,'restore']);
         Route::resource('employees',                 EmployeeController::class);

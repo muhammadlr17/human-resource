@@ -23,14 +23,14 @@ class EmployeeController extends Controller
         ));
     }
 
-    public function employeesByCompany(Company $company)
+    public function employeesByCompany($id)
     {
         $employees = $company->employees;
         return view('admin.employee.employeesByCompany', compact(
             'employees', 'company'
         ));
     }
-    public function employeesByDepartement(Departement $departement)
+    public function employeesByDepartement($id)
     {
         $employees = $departement->employees;
         return view('admin.employee.employeesByDepartement', compact(
