@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Company;
+use App\Models\Departement;
 
 class RegisterController extends Controller
 {
@@ -47,6 +49,15 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+
+
+    protected function showRegistrationForm(){
+        $companies = Company::all();
+        $departements = Departement::all();
+        return view('auth.register', compact(
+            'companies', 'departements'
+        ));
+    }
     protected function validator(array $data)
     {
         return Validator::make($data, [
