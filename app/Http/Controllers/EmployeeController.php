@@ -108,9 +108,9 @@ class EmployeeController extends Controller
             if(Hash::check($request->old_password, $employee->password)) {
                 $employee->password = $request->password;
                 $employee->save();
-                return redirect("employees/reset/$username")->with('success','Change Password Successfully!');
+                return redirect("employees/reset/$username")->with('success','Change password successfully!');
             } else {
-                return redirect("employees/reset/$username")->with('failed','Old Password Invalid!');
+                return redirect("employees/reset/$username")->with('failed','Old password invalid!');
             }
         } else {
             return redirect("employees")->with('failed','Employee not Found');
@@ -128,7 +128,7 @@ class EmployeeController extends Controller
     public function update(UpdateEmployeeRequest $request, User $employee)
     {
         $employee->update($request->all());
-        return redirect('employees')->with('success','Data berhasil diupdate!');
+        return redirect('employees')->with('success','Data have been succesfully updated!');
     }
 
     /**
@@ -137,8 +137,10 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $employee)
     {
-        //
+        $employee->delete();
+        return redirect('employees')->with('success','Data have been succesfully moved to trash!');
     }
+
 }
