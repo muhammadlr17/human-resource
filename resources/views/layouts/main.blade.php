@@ -60,17 +60,20 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#myTable').DataTable({
-                dom: 'Bfrtip',
+            var table = $('#myTable').DataTable({
+                lengthChange: true,
                 buttons: [{
                         extend: 'pdfHtml5',
                         orientation: 'potrait',
                         pageSize: 'LEGAL',
                         download: 'open',
                     },
-                    'copy', 'csv', 'excel', 'print'
+                    'copy', 'excel', 'csv'
                 ]
             });
+
+            table.buttons().container()
+                .appendTo('#myTable_wrapper .col-md-6:eq(0)');
         });
     </script>
 

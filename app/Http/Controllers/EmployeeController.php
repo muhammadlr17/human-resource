@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Hash;
 use Illuminate\Http\Request;
-use App\Http\Requests\EmployeeRequest;
+use App\Http\Requests\CreateEmployeeRequest;
+use App\Http\Requests\UpdateEmployeeRequest;
+use App\Http\Requests\ResetPasswordRequest;
 use App\Models\User;
 use App\Models\Company;
 use App\Models\Departement;
@@ -45,11 +48,10 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        $employee = new User;
         $companies = Company::all();
         $departements = Departement::all();
         return view('admin.employee.create', compact(
-            'employee','companies','departements'
+            'companies','departements'
         ));
     }
 
@@ -59,10 +61,10 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(EmployeeRequest $request)
+    public function store(CreateEmployeeRequest $request)
     {
         User::create($request->all());
-        return redirect('employees')->with('success', 'Data berhasil disimpan');
+        return redirect('employees')->with('success', 'Data have been succesfully saved!');
     }
 
     /**
@@ -90,6 +92,31 @@ class EmployeeController extends Controller
             'employee','companies','departements'
         ));
     }
+    
+    public function reset($username)
+    {
+        $employee = User::where('username', $username)->first();
+        return view('admin.employee.reset', compact(
+            'employee'
+        ));
+    }
+
+    public function resetPassword(ResetPasswordRequest $request, $username)
+    {
+        $employee = User::where('username', $username)->first();
+        if ($employee) {
+            if(Hash::check($request->old_password, $employee->password)) {
+                $employee->password = $request->password;
+                $employee->save();
+                return redirect("employees/reset/$username")->with('success','Change Password Successfully!');
+            } else {
+                return redirect("employees/reset/$username")->with('failed','Old Password Invalid!');
+            }
+        } else {
+            return redirect("employees")->with('failed','Employee not Found');
+        }
+        
+    }
 
     /**
      * Update the specified resource in storage.
@@ -98,9 +125,10 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateEmployeeRequest $request, User $employee)
     {
-        //
+        $employee->update($request->all());
+        return redirect('employees')->with('success','Data berhasil diupdate!');
     }
 
     /**

@@ -9,10 +9,17 @@
             <i class="fa fa-check-circle"></i> {{ Session::get('success') }}
         </div>
     @endif
+    @if (Session::has('failed'))
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <i class="fa fa-times-circle"></i> {{ Session::get('failed') }}
+        </div>
+    @endif
     <div class="panel panel-headline">
         <div class="panel-heading">
             <h3 class="panel-title">Employees</h3>
-            <a href="{{ url('employees/create') }}" class="btn btn-md btn-success text-light">
+            <a href="{{ route('employees.create') }}" class="btn btn-md btn-success text-light">
                 <i class="fa fa-plus"></i> Add
             </a>
             <a href="{{ url('employees/trash') }}" class="btn btn-md btn-warning text-light">

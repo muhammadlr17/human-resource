@@ -9,7 +9,7 @@
         <div class="panel-body">
             <form method="POST" action="{{ route('employees.store') }}" enctype="multipart/form-data">
                 @csrf
-                @include('admin.employee._form')
+                @include('admin.employee._formCreate')
             </form>
         </div>
     @endsection

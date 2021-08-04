@@ -9,7 +9,13 @@
         <div class="panel-body">
             <form method="POST" action="{{ route('employees.update', $employee) }}" enctype="multipart/form-data">
                 @csrf
-                @include('admin.employee._form')
+                @method('PATCH')
+                @include('admin.employee._formEdit')
+                <div class=" pull-right"> <a href="{{ route('employees.reset', $employee->username) }}"
+                        class="btn btn-md btn-warning text-light">
+                        <i class="fa fa-lock"></i> Reset Password
+                    </a>
+                </div>
             </form>
         </div>
     @endsection

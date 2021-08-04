@@ -42,7 +42,7 @@
 <div class="form-group">
     <label for="signin-email" class="control-label sr-only">Email</label>
     <input type="email" class="form-control input-sm @error('email') is-invalid @enderror" name="email"
-        value="{{ old('email') }}" required autocomplete="email" autofocus id="signin-email" placeholder="Email">
+        value="{{ $employee->email }}" required autocomplete="email" autofocus id="signin-email" placeholder="Email">
     @error('email')
         <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -50,33 +50,10 @@
     @enderror
 </div>
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="form-group">
-            <label for="password" class="control-label sr-only">Password</label>
-            <input id="password" type="password" class="form-control input-sm @error('password') is-invalid @enderror"
-                name="password" required autocomplete="new-password" placeholder="Password">
-
-            @error('password')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            <label for="password" class="control-label sr-only">Password</label>
-            <input id="password-confirm" type="password" class="form-control input-sm" name="password_confirmation"
-                required autocomplete="new-password" placeholder="Confirm Password">
-        </div>
-    </div>
-</div>
-
 <div class="form-group">
     <label for="phone" class="control-label sr-only" max="13">Phone</label>
     <input id="phone" type="text" class="form-control input-sm @error('phone') is-invalid @enderror" name="phone"
-        required placeholder="Phone" maxlength="13">
+        value="{{ $employee->phone }}" required placeholder="Phone" maxlength="13">
 
     @error('phone')
         <span class="invalid-feedback" role="alert">
@@ -108,7 +85,12 @@
     <select class="form-control input-sm @error('departement_id') is-invalid @enderror" name="departement_id">
         <option value="" selected>Your Departement</option>
         @foreach ($departements as $departement)
-            <option value="{{ $departement->id }}">{{ $departement->name }}</option>
+            @if ($departement->id == $employee->departement_id)
+                @php($select = 'selected')
+            @else
+                @php($select = '')
+            @endif
+            <option {{ $select }} value="{{ $departement->id }}">{{ $departement->name }}</option>
         @endforeach
     </select>
     @error('departement_id')
