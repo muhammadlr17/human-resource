@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', '| Edit Employee')
+@section('title', '| Reset Employee')
 @section('content')
     @if (Session::has('success'))
         <div class="alert alert-success alert-dismissible" role="alert">
@@ -18,7 +18,9 @@
     @endif
     <div class="panel panel-headline">
         <div class="panel-heading">
-            <h3 class="panel-title">Reset Employees : <b>{{ $employee->first_name . ' ' . $employee->last_name }}</b></h3>
+            <h3 class="panel-title">Reset Password for Employee :
+                <b>{{ $employee->first_name . ' ' . $employee->last_name }}</b>
+            </h3>
         </div>
         <div class="panel-body">
             <form method="POST" action="{{ route('employees.resetpassword', $employee) }}" enctype="multipart/form-data">
@@ -51,7 +53,7 @@
                     <input id="password-confirm" type="password" class="form-control input-sm" name="password_confirmation"
                         required autocomplete="new-password" placeholder="Confirm New Password">
                 </div>
-                <a href="{{ route('employees.index') }}" class="btn btn-secondary">Back</a>
+                <a href="{{ route('employees.edit', $employee) }}" class="btn btn-secondary">Back</a>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

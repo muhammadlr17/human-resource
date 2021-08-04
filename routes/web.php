@@ -27,10 +27,10 @@ Auth::routes();
 Route::middleware(['auth'])->group(function () {
  
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('profile', [App\Http\Controllers\HomeController::class, 'profile']);
+    Route::get('profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
  
     Route::middleware(['admin'])->group(function () {
-        Route::get('admin', [AdminController::class, 'index']);
+        Route::get('admin', [AdminController::class, 'index'])->name('admin');
         //Route::get('admin/profile', [AdminController::class, 'profile']);
         
         //Company
@@ -44,13 +44,14 @@ Route::middleware(['auth'])->group(function () {
         Route::get('employees/departement/{departement:slug}',   [EmployeeController::class,'employeesByDepartement'])->name('employees.departement');
         Route::get('employees/reset/{username?}',                [EmployeeController::class,'reset'])->name('employees.reset');
         Route::put('employees/reset/{username?}',                [EmployeeController::class,'resetPassword'])->name('employees.resetpassword');
-        Route::get('employees/trash',                            [EmployeeController::class,'trash']);
-        Route::get('employees/restore/{id?}',                    [EmployeeController::class,'restore']);
+        Route::get('employees/trash',                            [EmployeeController::class,'trash'])->name('employees.trash');
+        Route::get('employees/restore/{username?}',              [EmployeeController::class,'restore'])->name('employees.restore');
+        Route::delete('employees/delete/{username?}',            [EmployeeController::class,'delete'])->name('employees.delete');
         Route::resource('employees',                             EmployeeController::class);
     });
  
     Route::middleware(['user'])->group(function () {
-        Route::get('user', [UserController::class, 'index']);
+        Route::get('user', [UserController::class, 'index'])->name('user');
         //Route::get('user/profile', [UserController::class, 'profile']);
     });
  

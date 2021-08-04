@@ -4,24 +4,24 @@
         <nav>
             <ul class="nav">
                 @if (Auth::user()->role == 'admin')
-                    <li><a href="{{ url('admin') }}" class="{{ request()->is('admin') ? ' active' : '' }}"><i
+                    <li><a href="{{ route('admin') }}" class="{{ request()->is('admin') ? ' active' : '' }}"><i
                                 class="lnr lnr-home"></i>
                             <span>Dashboard</span></a>
                     </li>
-                    <li><a href="{{ url('companies') }}"
+                    <li><a href="{{ route('companies.index') }}"
                             class="{{ request()->is('companies') ? ' active' : '' }}"><i
                                 class="lnr lnr-apartment"></i>
                             <span>Companies</span></a></li>
-                    <li><a href="{{ url('departements') }}"
+                    <li><a href="{{ route('departements.index') }}"
                             class="{{ request()->is('departements') ? ' active' : '' }}"><i
                                 class="lnr lnr-license"></i>
                             <span>Departements</span></a></li>
-                    <li><a href="{{ url('employees') }}"
+                    <li><a href="{{ route('employees.index') }}"
                             class="{{ request()->is('employees') ? ' active' : '' }}"><i class="lnr lnr-users"></i>
                             <span>Employees</span></a></li>
                 @endif
                 @if (Auth::user()->role == 'user')
-                    <li><a href="{{ url('user') }}" class="{{ request()->is('user') ? ' active' : '' }}"><i
+                    <li><a href="{{ route('user') }}" class="{{ request()->is('user') ? ' active' : '' }}"><i
                                 class="lnr lnr-home"></i>
                             <span>Dashboard</span></a>
                     </li>
@@ -31,7 +31,7 @@
                         <span>Settings</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                     <div id="subPages" class="collapse ">
                         <ul class="nav">
-                            <li><a href="{{ url('profile') }}" class="">Profile</a></li>
+                            <li><a href="{{ route('profile') }}" class="">Profile</a></li>
                         </ul>
                     </div>
                 </li>

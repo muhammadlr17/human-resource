@@ -143,4 +143,36 @@ class EmployeeController extends Controller
         return redirect('employees')->with('success','Data have been succesfully moved to trash!');
     }
 
+    public function trash()
+    {
+        $employees = User::onlyTrashed()->get();
+        return view('admin.employee.trash', compact(
+            'employees'
+        ));
+    }
+
+    public function restore($username = null)
+    {
+        $employees = User::onlyTrashed();
+        if ($username != null) {
+            $employees->where('username', $username)->restore();
+        } else {
+            $employees->restore();
+        }
+
+        return redirect('employees/trash')->with('success', 'Data have been successfully restored!');
+    }
+
+    public function delete($username = null)
+    {
+        $employees = User::onlyTrashed();
+        if ($username != null) {
+            $employees->where('username', $username)->forceDelete();
+        } else {
+            $employees->forceDelete();
+        }
+
+        return redirect('employees/trash')->with('success', 'Data have been successfully deleted!');
+    }
+
 }

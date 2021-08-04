@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', '| Employee')
+@section('title', '| Trash Employee')
 @section('content')
     @if (Session::has('success'))
         <div class="alert alert-success alert-dismissible" role="alert">
@@ -16,15 +16,22 @@
             <i class="fa fa-times-circle"></i> {{ Session::get('failed') }}
         </div>
     @endif
+    <div class="panel panel-body">
+        <a href="{{ route('employees.index') }}" class=" badge"><i class="lnr lnr-arrow-left"></i> Back</a>
+        <a href="{{ route('employees.restore') }}" class="btn btn-xs btn-success text-light">
+            <i class="fa fa-undo"></i> Restore All
+        </a>
+        <form method="POST" action="{{ route('employees.delete') }}" style="display: inline"
+            onsubmit="return confirm('Data akan dihapus permanen. Yakin?')">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-xs btn-danger text-light"><span class="fa fa-trash"></span>
+                Delete Permanently All</button>
+        </form>
+    </div>
     <div class="panel panel-headline">
         <div class="panel-heading">
-            <h3 class="panel-title">Employees</h3>
-            <a href="{{ route('employees.create') }}" class="btn btn-xs btn-success text-light">
-                <i class="fa fa-plus"></i> Add
-            </a>
-            <a href="{{ route('employees.trash') }}" class="btn btn-xs btn-warning text-light">
-                <i class="fa fa-trash"></i> Recycle Bin
-            </a>
+            <h3 class="panel-title">Trash Employees</h3>
         </div>
         <div class="panel-body">
             <div class="table-responsive">
@@ -55,12 +62,9 @@
                                             href="{{ route('employees.departement', $employee->departement->slug) }}">{{ $employee->departement->name }}</a>
                                     </td>
                                     <td class="text-center">
-                                        <a href="{{ route('employees.show', $employee) }}"
-                                            class="btn btn-xs btn-info text-light"><span class="lnr lnr-eye"></span></a>
-                                        <a href="{{ route('employees.edit', $employee) }}"
-                                            class="btn btn-xs btn-warning text-light"><span
-                                                class="lnr lnr-pencil"></span></a>
-                                        <form method="POST" action="{{ route('employees.destroy', $employee) }}"
+                                        <a href="{{ route('employees.restore', $employee->username) }}"
+                                            class="btn btn-xs btn-success text-light"><span class="lnr lnr-undo"></span></a>
+                                        <form method="POST" action="{{ route('employees.delete', $employee->username) }}"
                                             style="display: inline" onsubmit="return confirm('Yakin hapus data?')">
                                             @csrf
                                             <input type="hidden" name="_method" value="DELETE">
