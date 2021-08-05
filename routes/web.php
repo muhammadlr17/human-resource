@@ -26,8 +26,11 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
  
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
+    Route::get('/home',                         [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('profile',                       [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
+    Route::put('profile/{user}',           [App\Http\Controllers\HomeController::class, 'profileUpdate'])->name('profile.update');
+    Route::get('profile/reset/{username?}',     [App\Http\Controllers\HomeController::class, 'reset'])->name('profile.reset');
+    Route::put('profile/reset/{username?}',     [App\Http\Controllers\HomeController::class, 'resetPassword'])->name('profile.resetpassword');
  
     Route::middleware(['admin'])->group(function () {
         Route::get('admin', [AdminController::class, 'index'])->name('admin');

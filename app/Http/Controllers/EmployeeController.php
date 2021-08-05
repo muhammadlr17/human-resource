@@ -70,12 +70,9 @@ class EmployeeController extends Controller
             $nama_file = time().str_replace(" ","", $file->getClientOriginalName());
             $file->move('image/profile', $nama_file); 
             $data['photo'] = $nama_file;
-            User::create($data);
-        
-            return redirect('employees')->with('success', 'Data have been succesfully saved!');
-        }else{
-            return redirect('employees')->with('failed', 'Data have been failed to save!');
         }
+        User::create($data);
+        return redirect('employees')->with('success', 'Data have been succesfully saved!');
 
     }
 
@@ -122,9 +119,8 @@ class EmployeeController extends Controller
             $nama_file = time().str_replace(" ","", $file->getClientOriginalName());
             $file->move('image/profile', $nama_file);
             $data['photo'] = $nama_file; 
-            $employee->update($data);
         }
-
+        $employee->update($data);
         return redirect('employees')->with('success','Data have been succesfully updated!');
     }
 

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ProfileRequest;
+use App\Http\Requests\ResetPasswordRequest;
+use App\Models\User;
 use Auth;
 
 class HomeController extends Controller
@@ -36,7 +39,20 @@ class HomeController extends Controller
 
     public function profile()
     {
-        $user = Auth::user();
-        return view('profile', compact('user'));
+        return view('profile');
+    }
+
+    public function profileUpdate(ProfileRequest $request, User $user)
+    {
+        $data = $request->all();
+        if($request->file('photo')){
+            File::delete('image/profile/'.$user->photo);
+            $file = $request->file('photo');
+            $nama_file = time().str_replace(" ","", $file->getClientOriginalName());
+            $file->move('image/profile', $nama_file);
+            $data['photo'] = $nama_file; 
+        }
+        $user->update($data);
+        return redirect('profile')->with('success','Your profile have been succesfully updated!');
     }
 }

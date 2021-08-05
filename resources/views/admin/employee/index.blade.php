@@ -57,10 +57,10 @@
                                     </td>
                                     <td class="text-center">
                                         @if (strlen($employee->photo) > 0)
-                                            <img src="{{ asset('image/profile/' . $employee->photo) }}" width="40px"
+                                            <img src="{{ asset('image/profile/' . $employee->photo) }}" width="30px"
                                                 class="img-circle">
                                         @else
-                                            <img src="{{ asset('image/profile/default.png') }}" width="40px"
+                                            <img src="{{ asset('image/profile/default.png') }}" width="30px"
                                                 class="img-circle">
                                         @endif
                                     </td>

@@ -18,10 +18,17 @@
         <div id="navbar-menu">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img
-                            src="{{ asset('assets/img/user.png') }}" class="img-circle" alt="Avatar">
-                        <span>{{ Auth::user()->first_name }}</span> <i
-                            class="icon-submenu lnr lnr-chevron-down"></i></a>
+                    @if (strlen(auth()->user()->photo) > 0)
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img
+                                src="{{ asset('image/profile/' . auth()->user()->photo) }}" class="img-circle">
+                            <span>{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}</span> <i
+                                class="icon-submenu lnr lnr-chevron-down"></i></a>
+                    @else
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img
+                                src="{{ asset('image/profile/default.png') }}" class="img-circle">
+                            <span>{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}</span> <i
+                                class="icon-submenu lnr lnr-chevron-down"></i></a>
+                    @endif
                     <ul class="dropdown-menu">
                         <li><a href="{{ url('profile') }}"><i class="lnr lnr-user"></i> <span>My Profile</span></a>
                         </li>
