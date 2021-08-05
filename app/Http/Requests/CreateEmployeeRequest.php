@@ -30,6 +30,7 @@ class CreateEmployeeRequest extends FormRequest
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'phone' => ['required','numeric','digits_between:10,13'],
+            'photo' => ['required','mimes:jpeg,jpg,png,svg','max:2048'],
             'company_id' => ['required'],
             'departement_id' => ['required'],
         ];

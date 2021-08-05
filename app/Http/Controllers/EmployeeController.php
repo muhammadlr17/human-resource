@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Hash;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
@@ -63,8 +64,19 @@ class EmployeeController extends Controller
      */
     public function store(CreateEmployeeRequest $request)
     {
-        User::create($request->all());
-        return redirect('employees')->with('success', 'Data have been succesfully saved!');
+        $data = $request->all();
+        if($request->file('photo')){
+            $file = $request->file('photo');
+            $nama_file = time().str_replace(" ","", $file->getClientOriginalName());
+            $file->move('image/profile', $nama_file); 
+            $data['photo'] = $nama_file;
+            User::create($data);
+        
+            return redirect('employees')->with('success', 'Data have been succesfully saved!');
+        }else{
+            return redirect('employees')->with('failed', 'Data have been failed to save!');
+        }
+
     }
 
     /**
@@ -93,6 +105,41 @@ class EmployeeController extends Controller
         ));
     }
     
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateEmployeeRequest $request, User $employee)
+    {
+        $data = $request->all();
+        if($request->file('photo')){
+            File::delete('image/profile/'.$employee->photo);
+            $file = $request->file('photo');
+            $nama_file = time().str_replace(" ","", $file->getClientOriginalName());
+            $file->move('image/profile', $nama_file);
+            $data['photo'] = $nama_file; 
+            $employee->update($data);
+        }
+
+        return redirect('employees')->with('success','Data have been succesfully updated!');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(User $employee)
+    {
+        $employee->delete();
+        return redirect('employees')->with('success','Data have been succesfully moved to trash!');
+    }
+
     public function reset($username)
     {
         $employee = User::where('username', $username)->first();
@@ -116,31 +163,6 @@ class EmployeeController extends Controller
             return redirect("employees")->with('failed','Employee not Found');
         }
         
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateEmployeeRequest $request, User $employee)
-    {
-        $employee->update($request->all());
-        return redirect('employees')->with('success','Data have been succesfully updated!');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $employee)
-    {
-        $employee->delete();
-        return redirect('employees')->with('success','Data have been succesfully moved to trash!');
     }
 
     public function trash()

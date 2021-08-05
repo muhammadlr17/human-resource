@@ -29,6 +29,7 @@ class UpdateEmployeeRequest extends FormRequest
             'username' => ['required', 'string', 'max:100', 'unique:users,username,'.$this->employee->id],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$this->employee->id],
             'phone' => ['required','numeric','digits_between:10,13'],
+            'photo' => ['required','mimes:jpeg,jpg,png,svg','max:2048'],
             'company_id' => ['required'],
             'departement_id' => ['required'],
         ];

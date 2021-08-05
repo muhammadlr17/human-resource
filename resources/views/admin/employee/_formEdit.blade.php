@@ -51,7 +51,7 @@
 </div>
 
 <div class="form-group">
-    <label for="phone" class="control-label sr-only" max="13">Phone</label>
+    <label for="phone" class="control-label sr-only">Phone</label>
     <input id="phone" type="text" class="form-control input-sm @error('phone') is-invalid @enderror" name="phone"
         value="{{ $employee->phone }}" required placeholder="Phone" maxlength="13">
 
@@ -60,6 +60,20 @@
             <strong>{{ $message }}</strong>
         </span>
     @enderror
+</div>
+
+<div class="form-group">
+    <label for="photo" class="control-label sr-only">Photo</label>
+    <input type="file" name="photo" class="form-control-file @error('phone') is-invalid @enderror" id="photo"
+        value="{{ $employee->photo }}">
+    @error('photo')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+    @enderror
+    @if (strlen($employee->photo) > 0)
+        <img src="{{ asset('image/profile/' . $employee->photo) }}" width="80px" class="mt-1">
+    @endif
 </div>
 
 <div class="form-group">

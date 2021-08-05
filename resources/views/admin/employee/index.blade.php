@@ -37,6 +37,7 @@
                             <th>Email</th>
                             <th>Company</th>
                             <th>Departement</th>
+                            <th>Photo</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -55,17 +56,27 @@
                                             href="{{ route('employees.departement', $employee->departement->slug) }}">{{ $employee->departement->name }}</a>
                                     </td>
                                     <td class="text-center">
+                                        @if (strlen($employee->photo) > 0)
+                                            <img src="{{ asset('image/profile/' . $employee->photo) }}" width="40px"
+                                                class="img-circle">
+                                        @else
+                                            <img src="{{ asset('image/profile/default.png') }}" width="40px"
+                                                class="img-circle">
+                                        @endif
+                                    </td>
+                                    <td class="text-center">
                                         <a href="{{ route('employees.show', $employee) }}"
-                                            class="btn btn-xs btn-info text-light"><span class="lnr lnr-eye"></span></a>
+                                            class="btn btn-xs btn-info text-light"><span
+                                                class="small lnr lnr-eye"></span></a>
                                         <a href="{{ route('employees.edit', $employee) }}"
                                             class="btn btn-xs btn-warning text-light"><span
-                                                class="lnr lnr-pencil"></span></a>
+                                                class="small lnr lnr-pencil"></span></a>
                                         <form method="POST" action="{{ route('employees.destroy', $employee) }}"
                                             style="display: inline" onsubmit="return confirm('Yakin hapus data?')">
                                             @csrf
                                             <input type="hidden" name="_method" value="DELETE">
                                             <button type="submit" class="btn btn-xs btn-danger"><span
-                                                    class="lnr lnr-trash"></span></button>
+                                                    class="small lnr lnr-trash"></span></button>
                                         </form>
                                     </td>
                                 </tr>

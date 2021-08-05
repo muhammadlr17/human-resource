@@ -85,6 +85,16 @@
 </div>
 
 <div class="form-group">
+    <label for="photo" class="control-label sr-only">Photo</label>
+    <input type="file" name="photo" class="form-control-file @error('phone') is-invalid @enderror" id="photo">
+    @error('photo')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+    @enderror
+</div>
+
+<div class="form-group">
     <select class="form-control input-sm @error('company_id') is-invalid @enderror" name="company_id">
         <option value="" selected>Your Company</option>
         @foreach ($companies as $company)
