@@ -1,16 +1,37 @@
 @extends('layouts.main')
 
-@section('title', '| Company')
+@section('title', '| Trash Companies')
 @section('content')
+    @if (Session::has('success'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <i class="fa fa-check-circle"></i> {{ Session::get('success') }}
+        </div>
+    @endif
+    @if (Session::has('failed'))
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <i class="fa fa-times-circle"></i> {{ Session::get('failed') }}
+        </div>
+    @endif
+    <div class="panel panel-body">
+        <a href="{{ route('companies.index') }}" class=" badge"><i class="lnr lnr-arrow-left"></i> Back</a>
+        <a href="{{ route('companies.restore') }}" class="btn btn-xs btn-success text-light">
+            <i class="fa fa-undo"></i> Restore All
+        </a>
+        <form method="POST" action="{{ route('companies.delete') }}" style="display: inline"
+            onsubmit="return confirm('Data akan dihapus permanen. Yakin?')">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-xs btn-danger text-light"><span class="fa fa-trash"></span>
+                Delete Permanently All</button>
+        </form>
+    </div>
     <div class="panel panel-headline">
         <div class="panel-heading">
-            <h3 class="panel-title">Companies</h3>
-            <a href="{{ route('companies.create') }}" class="btn btn-xs btn-success text-light">
-                <i class="fa fa-plus"></i> Add
-            </a>
-            <a href="{{ route('companies.trash') }}" class="btn btn-xs btn-warning text-light">
-                <i class="fa fa-trash"></i> Recycle Bin
-            </a>
+            <h3 class="panel-title">Trash Employees</h3>
         </div>
         <div class="panel-body">
             <div class="table-responsive">
@@ -59,4 +80,5 @@
                 </table>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection

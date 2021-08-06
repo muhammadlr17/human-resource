@@ -64,6 +64,7 @@
 
 <div class="form-group">
     <label for="photo" class="control-label sr-only">Photo</label>
+    <small>Photo Profile</small>
     <input type="file" name="photo" class="form-control-file @error('phone') is-invalid @enderror" id="photo"
         value="{{ $employee->photo }}">
     @error('photo')

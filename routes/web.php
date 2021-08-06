@@ -37,7 +37,10 @@ Route::middleware(['auth'])->group(function () {
         //Route::get('admin/profile', [AdminController::class, 'profile']);
         
         //Company
-        Route::resource('companies', CompanyController::class);
+        Route::get('companies/trash',                        [CompanyController::class, 'trash'])->name('companies.trash');
+        Route::get('companies/restore/{slug?}',              [CompanyController::class,'restore'])->name('companies.restore');
+        Route::delete('companies/delete/{slug?}',            [CompanyController::class,'delete'])->name('companies.delete');
+        Route::resource('companies',                         CompanyController::class);
         
         //Departement
         Route::resource('departements', DepartementController::class);
