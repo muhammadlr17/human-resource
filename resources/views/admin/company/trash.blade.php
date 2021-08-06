@@ -55,23 +55,22 @@
                                     <td>{{ $company->email }}</td>
                                     <td class="text-center">
                                         @if (strlen($company->logo) > 0)
-                                            <img src="{{ asset('image/' . $company->gambar) }}" width="80px">
+                                            <img src="{{ asset('image/logo/' . $company->logo) }}" width="40px"
+                                                class="img-circle">
                                         @endif
                                     </td>
                                     <td>{{ $company->website_url }}</td>
                                     <td class="text-center">
-                                        <a href="{{ url('companies/' . $company->id) }}"
-                                            class="btn btn-xs btn-info text-light"><span class="lnr lnr-eye"></span></a>
-                                        <a href="{{ url('companies/' . $company->id . '/edit') }}"
-                                            class="btn btn-xs btn-warning text-light"><span
-                                                class="lnr lnr-pencil"></span></a>
-                                        <form method="POST" action="{{ url('companies/' . $company->id) }}"
+                                        <a href="{{ route('companies.restore', $company->slug) }}"
+                                            class="btn btn-xs btn-success text-light"><span class="lnr lnr-undo"></span></a>
+                                        <form method="POST" action="{{ route('companies.delete', $company->slug) }}"
                                             style="display: inline" onsubmit="return confirm('Yakin hapus data?')">
                                             @csrf
                                             <input type="hidden" name="_method" value="DELETE">
                                             <button type="submit" class="btn btn-xs btn-danger"><span
                                                     class="lnr lnr-trash"></span></button>
                                         </form>
+                                    </td>
                                     </td>
                                 </tr>
                             @endforeach

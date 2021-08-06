@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CompanyRequest;
+use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Company;
+use File;
 use Str;
 
 class CompanyController extends Controller
@@ -58,9 +60,9 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Company $company)
     {
-        //
+        return view('admin.company.detail', compact('company'));
     }
 
     /**
@@ -69,9 +71,9 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Company $company)
     {
-        //
+        return view('admin.company.edit', compact('company'));
     }
 
     /**
@@ -81,9 +83,18 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCompanyRequest $request, Company $company)
     {
-        //
+        $data = $request->all();
+        if($request->file('logo')){
+            File::delete('image/logo/'.$company->logo);
+            $file = $request->file('logo');
+            $nama_file = time().str_replace(" ","", $file->getClientOriginalName());
+            $file->move('image/logo', $nama_file);
+            $data['logo'] = $nama_file; 
+        }
+        $company->update($data);
+        return redirect('companies')->with('success','Data have been succesfully updated!');
     }
 
     /**
@@ -92,9 +103,10 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Company $company)
     {
-        //
+        $company->delete();
+        return redirect('companies')->with('success','Data have been succesfully moved to trash!');
     }
 
     public function trash()
@@ -105,11 +117,11 @@ class CompanyController extends Controller
         ));
     }
 
-    /* public function restore($username = null)
+    public function restore($slug = null)
     {
-        $companies = User::onlyTrashed();
-        if ($username != null) {
-            $companies->where('username', $username)->restore();
+        $companies = Company::onlyTrashed();
+        if ($slug != null) {
+            $companies->where('slug', $slug)->restore();
         } else {
             $companies->restore();
         }
@@ -117,15 +129,15 @@ class CompanyController extends Controller
         return redirect('companies/trash')->with('success', 'Data have been successfully restored!');
     }
 
-    public function delete($username = null)
+    public function delete($slug = null)
     {
-        $companies = User::onlyTrashed();
-        if ($username != null) {
-            $companies->where('username', $username)->forceDelete();
+        $companies = Company::onlyTrashed();
+        if ($slug != null) {
+            $companies->where('slug', $slug)->forceDelete();
         } else {
             $companies->forceDelete();
         }
 
         return redirect('companies/trash')->with('success', 'Data have been successfully deleted!');
-    } */
+    }
 }

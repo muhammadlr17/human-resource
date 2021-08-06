@@ -2,6 +2,20 @@
 
 @section('title', '| Company')
 @section('content')
+    @if (Session::has('success'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <i class="fa fa-check-circle"></i> {{ Session::get('success') }}
+        </div>
+    @endif
+    @if (Session::has('failed'))
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <i class="fa fa-times-circle"></i> {{ Session::get('failed') }}
+        </div>
+    @endif
     <div class="panel panel-headline">
         <div class="panel-heading">
             <h3 class="panel-title">Companies</h3>
@@ -34,17 +48,18 @@
                                     <td>{{ $company->email }}</td>
                                     <td class="text-center">
                                         @if (strlen($company->logo) > 0)
-                                            <img src="{{ asset('image/' . $company->gambar) }}" width="80px">
+                                            <img src="{{ asset('image/logo/' . $company->logo) }}" class="img-circle"
+                                                width="40px">
                                         @endif
                                     </td>
                                     <td>{{ $company->website_url }}</td>
                                     <td class="text-center">
-                                        <a href="{{ url('companies/' . $company->id) }}"
+                                        <a href="{{ route('companies.show', $company) }}"
                                             class="btn btn-xs btn-info text-light"><span class="lnr lnr-eye"></span></a>
-                                        <a href="{{ url('companies/' . $company->id . '/edit') }}"
+                                        <a href="{{ route('companies.edit', $company) }}"
                                             class="btn btn-xs btn-warning text-light"><span
                                                 class="lnr lnr-pencil"></span></a>
-                                        <form method="POST" action="{{ url('companies/' . $company->id) }}"
+                                        <form method="POST" action="{{ route('companies.destroy', $company) }}"
                                             style="display: inline" onsubmit="return confirm('Yakin hapus data?')">
                                             @csrf
                                             <input type="hidden" name="_method" value="DELETE">

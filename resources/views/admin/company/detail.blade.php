@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', '| Detail Employee')
+@section('title', '| Detail Company')
 @section('content')
     <div class="panel panel-profile">
         <div class="clearfix">
@@ -10,34 +10,22 @@
                 <div class="profile-header">
                     <div class="overlay"></div>
                     <div class="profile-main">
-                        @if (strlen($employee->photo) > 0)
-                            <img src="{{ asset('image/profile/' . $employee->photo) }}" width="100px" class="img-circle">
-                        @else
-                            <img src="{{ asset('image/profile/default.png') }}" width="100px" class="img-circle">
+                        @if (strlen($company->logo) > 0)
+                            <img src="{{ asset('image/logo/' . $company->logo) }}" width="100px" class="img-circle">
                         @endif
-                        <h3 class="name">{{ $employee->first_name . ' ' . $employee->last_name }}</h3>
-                        <span class="online-status status-available">Available</span>
+                        <h3 class="name">{{ $company->name }}</h3>
                     </div>
                 </div>
                 <!-- END PROFILE HEADER -->
                 <!-- PROFILE DETAIL -->
                 <div class="profile-detail">
                     <div class="profile-info">
-                        <h3 class="heading">About</h3>
+                        <h3 class="heading">About Company</h3>
                         <ul class="list-unstyled list-justify">
-                            <li>Username <span>{{ $employee->username }}</span></li>
-                            <li>Email <span>{{ $employee->email }}</span></li>
-                            <li>Phone <span>{{ $employee->phone }}</span></li>
-                            <li>Company <span><a
-                                        href="{{ route('employees.company', $employee->company->slug) }}">{{ $employee->company->name }}</a></span>
-                            </li>
-                            <li>Departement <span><a
-                                        href="{{ route('employees.departement', $employee->departement->slug) }}">{{ $employee->departement->name }}</a></span>
-                            </li>
+                            <li>Company Name <span>{{ $company->name }}</span></li>
+                            <li>Email <span>{{ $company->email }}</span></li>
+                            <li>Website URL <span>{{ $company->website_url }}</span></li>
                         </ul>
-                    </div>
-                    <div class="profile-info">
-                        <a href="{{ route('employees.edit', $employee) }}" class="btn btn-primary">Edit Profile</a>
                     </div>
                 </div>
                 <!-- END PROFILE DETAIL -->
@@ -46,7 +34,7 @@
             <!-- RIGHT COLUMN -->
             <div class="profile-right">
                 <h4 class="heading">
-                    <a href="{{ route('employees.index') }}" class=" badge"><i class="lnr lnr-arrow-left"></i> Back</a>
+                    <a href="{{ route('companies.index') }}" class=" badge"><i class="lnr lnr-arrow-left"></i> Back</a>
                 </h4>
                 <!-- TABBED CONTENT -->
                 <div class="custom-tabs-line tabs-line-bottom left-aligned">

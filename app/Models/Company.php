@@ -13,12 +13,17 @@ class Company extends Model
         'name',
         'email',
         'logo',
-        'webisite_url',
+        'website_url',
         'slug'
     ];
 
     public function employees()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }
