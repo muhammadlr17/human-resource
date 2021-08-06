@@ -7,6 +7,7 @@ use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Models\User;
 use Auth;
+use Hash;
 
 class HomeController extends Controller
 {
@@ -54,5 +55,30 @@ class HomeController extends Controller
         }
         $user->update($data);
         return redirect('profile')->with('success','Your profile have been succesfully updated!');
+    }
+
+    public function reset($username)
+    {
+        $user = User::where('username', $username)->first();
+        return view('reset', compact(
+            'user'
+        ));
+    }
+
+    public function resetPassword(ResetPasswordRequest $request, $username)
+    {
+        $employee = User::where('username', $username)->first();
+        if ($employee) {
+            if(Hash::check($request->old_password, $employee->password)) {
+                $employee->password = $request->password;
+                $employee->save();
+                return redirect("profile/reset/$username")->with('success','Change password successfully!');
+            } else {
+                return redirect("profile/reset/$username")->with('failed','Old password invalid!');
+            }
+        } else {
+            return redirect('profile')->with('failed','User not Found');
+        }
+        
     }
 }

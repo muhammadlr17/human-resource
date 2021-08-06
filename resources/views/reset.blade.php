@@ -18,12 +18,12 @@
     @endif
     <div class="panel panel-headline">
         <div class="panel-heading">
-            <h3 class="panel-title">Reset Password for Employee :
-                <b>{{ $employee->first_name . ' ' . $employee->last_name }}</b>
+            <h3 class="panel-title">Reset Password :
+                <b>{{ $user->first_name . ' ' . $user->last_name }}</b>
             </h3>
         </div>
         <div class="panel-body">
-            <form method="POST" action="{{ route('employees.resetpassword', $employee) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('profile.resetpassword', $user) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="form-group">
@@ -53,7 +53,7 @@
                     <input id="password-confirm" type="password" class="form-control input-sm" name="password_confirmation"
                         required autocomplete="new-password" placeholder="Confirm New Password">
                 </div>
-                <a href="{{ route('employees.edit', $employee) }}" class="btn btn-secondary">Back</a>
+                <a href="{{ route('profile') }}" class="btn btn-secondary">Back</a>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

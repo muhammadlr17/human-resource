@@ -28,7 +28,7 @@ Route::middleware(['auth'])->group(function () {
  
     Route::get('/home',                         [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('profile',                       [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
-    Route::put('profile/{user}',           [App\Http\Controllers\HomeController::class, 'profileUpdate'])->name('profile.update');
+    Route::put('profile/{user}',                [App\Http\Controllers\HomeController::class, 'profileUpdate'])->name('profile.update');
     Route::get('profile/reset/{username?}',     [App\Http\Controllers\HomeController::class, 'reset'])->name('profile.reset');
     Route::put('profile/reset/{username?}',     [App\Http\Controllers\HomeController::class, 'resetPassword'])->name('profile.resetpassword');
  
@@ -60,7 +60,7 @@ Route::middleware(['auth'])->group(function () {
  
     Route::get('/logout', function() {
         Auth::logout();
-        redirect('/');
+        return redirect('/');
     });
  
 });
