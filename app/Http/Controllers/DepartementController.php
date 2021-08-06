@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Request\DepartementRequest;
 use App\Models\Departement;
 
 class DepartementController extends Controller
@@ -84,5 +85,37 @@ class DepartementController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function trash()
+    {
+        $departements = Departement::onlyTrashed()->get();
+        return view('admin.departement.trash', compact(
+            'departements'
+        ));
+    }
+
+    public function restore($slug = null)
+    {
+        $departements = Departement::onlyTrashed();
+        if ($slug != null) {
+            $departements->where('slug', $slug)->restore();
+        } else {
+            $departements->restore();
+        }
+
+        return redirect('departements/trash')->with('success', 'Data have been successfully restored!');
+    }
+
+    public function delete($slug = null)
+    {
+        $departements = Departement::onlyTrashed();
+        if ($slug != null) {
+            $departements->where('slug', $slug)->forceDelete();
+        } else {
+            $departements->forceDelete();
+        }
+
+        return redirect('departements/trash')->with('success', 'Data have been successfully deleted!');
     }
 }

@@ -37,13 +37,16 @@ Route::middleware(['auth'])->group(function () {
         //Route::get('admin/profile', [AdminController::class, 'profile']);
         
         //Company
-        Route::get('companies/trash',                        [CompanyController::class, 'trash'])->name('companies.trash');
-        Route::get('companies/restore/{slug?}',              [CompanyController::class,'restore'])->name('companies.restore');
-        Route::delete('companies/delete/{slug?}',            [CompanyController::class,'delete'])->name('companies.delete');
-        Route::resource('companies',                         CompanyController::class);
+        Route::get('companies/trash',                       [CompanyController::class,'trash'])->name('companies.trash');
+        Route::get('companies/restore/{slug?}',             [CompanyController::class,'restore'])->name('companies.restore');
+        Route::delete('companies/delete/{slug?}',           [CompanyController::class,'delete'])->name('companies.delete');
+        Route::resource('companies',                        CompanyController::class);
         
         //Departement
-        Route::resource('departements', DepartementController::class);
+        Route::get('departements/trash',                    [DepartementController::class,'trash'])->name('departements.trash');
+        Route::get('departements/restore/{slug?}',          [DepartementController::class,'restore'])->name('departements.restore');
+        Route::delete('departements/delete/{slug?}',        [DepartementController::class,'delete'])->name('departements.delete');
+        Route::resource('departements',                     DepartementController::class);
         
         //Employee
         Route::get('employees/company/{company:slug}',           [EmployeeController::class,'employeesByCompany'])->name('employees.company');
