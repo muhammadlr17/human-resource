@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Request\DepartementRequest;
+use App\Http\Requests\DepartementRequest;
 use App\Models\Departement;
+use Illuminate\Support\Str;
+use Exception;
 
 class DepartementController extends Controller
 {
@@ -28,7 +30,7 @@ class DepartementController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.departement.create');
     }
 
     /**
@@ -37,9 +39,18 @@ class DepartementController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DepartementRequest $request)
     {
-        //
+        $data = $request->all();
+        $data['slug'] = Str::slug($data['name']);
+
+        try {
+            Departement::create($data);
+        } catch (Exception $exception) {
+            return redirect()->route('departements.create')->with('failed', 'Departement already exist!');
+        }
+
+        return redirect('departements')->with('success', 'Data have been successfully saved!');
     }
 
     /**
@@ -48,9 +59,9 @@ class DepartementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Departement $departement)
     {
-        //
+        return view('admin.departement.detail', compact('departement'));
     }
 
     /**
@@ -59,9 +70,9 @@ class DepartementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Departement $departement)
     {
-        //
+        return view('admin.departement.edit', compact('departement'));
     }
 
     /**
@@ -71,9 +82,17 @@ class DepartementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Departement $departement)
     {
-        //
+        $data = $request->all();
+        $data['slug'] = Str::slug($data['name']);
+        try {
+            $departement->update($data);
+        } catch (Exception $exception) {
+            return redirect()->route('departements.index')->with('failed', 'You cant edit to an existing Departement!');
+        }
+
+        return redirect('departements')->with('success', 'Data have been successfully updated!');
     }
 
     /**
@@ -82,9 +101,11 @@ class DepartementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Departement $departement)
     {
-        //
+        $departement->delete();
+
+        return redirect('departements')->with('success', 'Data have been moved to trash');
     }
 
     public function trash()

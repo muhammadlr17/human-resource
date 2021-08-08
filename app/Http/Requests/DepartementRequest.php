@@ -11,10 +11,10 @@ class DepartementRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    /* public function authorize()
     {
         return false;
-    }
+    } */
 
     /**
      * Get the validation rules that apply to the request.
@@ -24,7 +24,9 @@ class DepartementRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string|max:100',
+            'slug' => 'unique:departements,slug',
+            'description' => 'required|string|max:255',
         ];
     }
 }

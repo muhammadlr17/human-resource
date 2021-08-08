@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Company;
-use File;
-use Str;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
+use Exception;
 
 class CompanyController extends Controller
 {
@@ -43,14 +44,18 @@ class CompanyController extends Controller
     public function store(CompanyRequest $request)
     {
         $data = $request->all();
-        if($request->file('logo')){
+        if ($request->file('logo')) {
             $file = $request->file('logo');
-            $nama_file = time().str_replace(" ","", $file->getClientOriginalName());
-            $file->move('image/logo', $nama_file); 
+            $nama_file = time() . str_replace(" ", "", $file->getClientOriginalName());
+            $file->move('image/logo', $nama_file);
             $data['logo'] = $nama_file;
         }
         $data['slug'] = Str::slug($data['name']);
-        Company::create($data);
+        try {
+            Company::create($data);
+        } catch (Exception $exception) {
+            return redirect()->route('companies.create')->with('failed', 'Company already exist!');
+        }
         return redirect('companies')->with('success', 'Data have been succesfully saved!');
     }
 
@@ -86,15 +91,20 @@ class CompanyController extends Controller
     public function update(UpdateCompanyRequest $request, Company $company)
     {
         $data = $request->all();
-        if($request->file('logo')){
-            File::delete('image/logo/'.$company->logo);
+        if ($request->file('logo')) {
+            File::delete('image/logo/' . $company->logo);
             $file = $request->file('logo');
-            $nama_file = time().str_replace(" ","", $file->getClientOriginalName());
+            $nama_file = time() . str_replace(" ", "", $file->getClientOriginalName());
             $file->move('image/logo', $nama_file);
-            $data['logo'] = $nama_file; 
+            $data['logo'] = $nama_file;
         }
-        $company->update($data);
-        return redirect('companies')->with('success','Data have been succesfully updated!');
+        $data['slug'] = Str::slug($data['name']);
+        try {
+            $company->update($data);
+        } catch (Exception $exception) {
+            return redirect()->route('companies.index')->with('failed', 'You cant edit to an existing Company!');
+        }
+        return redirect('companies')->with('success', 'Data have been succesfully updated!');
     }
 
     /**
@@ -106,7 +116,7 @@ class CompanyController extends Controller
     public function destroy(Company $company)
     {
         $company->delete();
-        return redirect('companies')->with('success','Data have been succesfully moved to trash!');
+        return redirect('companies')->with('success', 'Data have been succesfully moved to trash!');
     }
 
     public function trash()
@@ -133,7 +143,9 @@ class CompanyController extends Controller
     {
         $companies = Company::onlyTrashed();
         if ($slug != null) {
-            $companies->where('slug', $slug)->forceDelete();
+            $company = $companies->where('slug', $slug)->first();
+            File::delete('image/logo/' . $company->logo);
+            $company->forceDelete();
         } else {
             $companies->forceDelete();
         }

@@ -25,9 +25,9 @@ class UpdateCompanyRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:100',
-            'email' => 'required|string|email|max:50|unique:companies,email,'.$this->company->id,
+            'email' => 'required|string|email|max:50|unique:companies,email,' . $this->company->id,
             'logo' => 'image|mimes:jpeg,jpg,png,svg|max:2048|dimensions:min_width=100,min_height=100',
-            'website_url' => 'required|url|unique:companies,website_url,'.$this->company->id,
+            'website_url' => 'required|url|unique:companies,website_url,' . $this->company->id,
         ];
     }
 }
