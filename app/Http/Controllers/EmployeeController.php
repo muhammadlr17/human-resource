@@ -31,14 +31,16 @@ class EmployeeController extends Controller
     {
         $employees = $company->employees;
         return view('admin.employee.employeesByCompany', compact(
-            'employees', 'company'
+            'employees',
+            'company'
         ));
     }
     public function employeesByDepartement(Departement $departement)
     {
         $employees = $departement->employees;
         return view('admin.employee.employeesByDepartement', compact(
-            'employees', 'departement'
+            'employees',
+            'departement'
         ));
     }
 
@@ -52,7 +54,8 @@ class EmployeeController extends Controller
         $companies = Company::all();
         $departements = Departement::all();
         return view('admin.employee.create', compact(
-            'companies','departements'
+            'companies',
+            'departements'
         ));
     }
 
@@ -65,15 +68,15 @@ class EmployeeController extends Controller
     public function store(CreateEmployeeRequest $request)
     {
         $data = $request->all();
-        if($request->file('photo')){
+        if ($request->file('photo')) {
             $file = $request->file('photo');
-            $nama_file = time().str_replace(" ","", $file->getClientOriginalName());
-            $file->move('image/profile', $nama_file); 
+            $nama_file = time() . str_replace(" ", "", $file->getClientOriginalName());
+            $file->move('image/profile', $nama_file);
             $data['photo'] = $nama_file;
         }
         User::create($data);
-        return redirect('employees')->with('success', 'Data have been succesfully saved!');
-
+        alert()->success('Success', 'Data have been succesfully saved!');
+        return redirect('employees');
     }
 
     /**
@@ -96,12 +99,14 @@ class EmployeeController extends Controller
     public function edit(User $employee)
     {
         $companies = Company::all();
-        $departements = Departement::all();   
+        $departements = Departement::all();
         return view('admin.employee.edit', compact(
-            'employee','companies','departements'
+            'employee',
+            'companies',
+            'departements'
         ));
     }
-    
+
 
     /**
      * Update the specified resource in storage.
@@ -113,15 +118,16 @@ class EmployeeController extends Controller
     public function update(UpdateEmployeeRequest $request, User $employee)
     {
         $data = $request->all();
-        if($request->file('photo')){
-            File::delete('image/profile/'.$employee->photo);
+        if ($request->file('photo')) {
+            File::delete('image/profile/' . $employee->photo);
             $file = $request->file('photo');
-            $nama_file = time().str_replace(" ","", $file->getClientOriginalName());
+            $nama_file = time() . str_replace(" ", "", $file->getClientOriginalName());
             $file->move('image/profile', $nama_file);
-            $data['photo'] = $nama_file; 
+            $data['photo'] = $nama_file;
         }
         $employee->update($data);
-        return redirect('employees')->with('success','Data have been succesfully updated!');
+        alert()->success('Success','Data have been succesfully updated!');
+        return redirect('employees');
     }
 
     /**
@@ -133,7 +139,8 @@ class EmployeeController extends Controller
     public function destroy(User $employee)
     {
         $employee->delete();
-        return redirect('employees')->with('success','Data have been succesfully moved to trash!');
+        alert()->success('Success','Data have been succesfully moved to trash!');
+        return redirect('employees');
     }
 
     public function reset($username)
@@ -148,17 +155,19 @@ class EmployeeController extends Controller
     {
         $employee = User::where('username', $username)->first();
         if ($employee) {
-            if(Hash::check($request->old_password, $employee->password)) {
+            if (Hash::check($request->old_password, $employee->password)) {
                 $employee->password = $request->password;
                 $employee->save();
-                return redirect("employees/reset/$username")->with('success','Change password successfully!');
+                alert()->success('Success','Change password successfully!');
+                return redirect("employees/reset/$username");
             } else {
-                return redirect("employees/reset/$username")->with('failed','Old password invalid!');
+                alert()->error('ErrotAlert','Old password invalid!');
+                return redirect("employees/reset/$username");
             }
         } else {
-            return redirect("employees")->with('failed','Employee not Found');
+            alert()->error('ErrorAlert','Employee not Found');
+            return redirect("employees");
         }
-        
     }
 
     public function trash()
@@ -178,7 +187,8 @@ class EmployeeController extends Controller
             $employees->restore();
         }
 
-        return redirect('employees/trash')->with('success', 'Data have been successfully restored!');
+        alert()->success('Success','Data have been successfully restored!');
+        return redirect('employees/trash');
     }
 
     public function delete($username = null)
@@ -190,7 +200,8 @@ class EmployeeController extends Controller
             $employees->forceDelete();
         }
 
-        return redirect('employees/trash')->with('success', 'Data have been successfully deleted!');
+        alert()->success('Success','Data have been successfully deleted!');
+        return redirect('employees/trash');
     }
 
 }

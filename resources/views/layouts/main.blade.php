@@ -25,6 +25,7 @@
 </head>
 
 <body>
+    @include('sweetalert::alert')
     <!-- WRAPPER -->
     <div id="wrapper">
         @include('layouts.page.nav')

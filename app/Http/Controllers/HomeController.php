@@ -8,6 +8,7 @@ use App\Http\Requests\ResetPasswordRequest;
 use App\Models\User;
 use Auth;
 use Hash;
+use File;
 
 class HomeController extends Controller
 {
@@ -30,8 +31,10 @@ class HomeController extends Controller
     {
         $role = Auth::user()->role;
         if($role == "admin"){
+            alert()->success('Success','Login Success to Admin Panel!');
             return redirect()->to('admin');
         } else if($role == "user"){
+            alert()->success('Success','Login Success to Employee Panel!');
             return redirect()->to('user');
         } else {
             return redirect()->to('logout');
@@ -51,10 +54,11 @@ class HomeController extends Controller
             $file = $request->file('photo');
             $nama_file = time().str_replace(" ","", $file->getClientOriginalName());
             $file->move('image/profile', $nama_file);
-            $data['photo'] = $nama_file; 
+            $data['photo'] = $nama_file;
         }
         $user->update($data);
-        return redirect('profile')->with('success','Your profile have been succesfully updated!');
+        alert()->success('Success','Your profile have been succesfully updated!');
+        return redirect('profile');
     }
 
     public function reset($username)
@@ -72,13 +76,16 @@ class HomeController extends Controller
             if(Hash::check($request->old_password, $employee->password)) {
                 $employee->password = $request->password;
                 $employee->save();
-                return redirect("profile/reset/$username")->with('success','Change password successfully!');
+                alert()->success('Success','Change password successfully!');
+                return redirect("profile/reset/$username");
             } else {
-                return redirect("profile/reset/$username")->with('failed','Old password invalid!');
+                alert()->error('ErrorAlert','Old password invalid!');
+                return redirect("profile/reset/$username");
             }
         } else {
-            return redirect('profile')->with('failed','User not Found');
+            alert()->error('ErrorAlert','User not Found');
+            return redirect('profile');
         }
-        
+
     }
 }

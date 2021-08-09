@@ -54,9 +54,11 @@ class CompanyController extends Controller
         try {
             Company::create($data);
         } catch (Exception $exception) {
-            return redirect()->route('companies.create')->with('failed', 'Company already exist!');
+            alert()->warning('Warning','Company already exist!');
+            return redirect()->route('companies.create');
         }
-        return redirect('companies')->with('success', 'Data have been succesfully saved!');
+        alert()->success('Success','Data have been succesfully saved!');
+        return redirect('companies');
     }
 
     /**
@@ -102,9 +104,11 @@ class CompanyController extends Controller
         try {
             $company->update($data);
         } catch (Exception $exception) {
-            return redirect()->route('companies.index')->with('failed', 'You cant edit to an existing Company!');
+            alert()->warning('Warning','You cant edit to an existing Company!');
+            return redirect()->route('companies.index');
         }
-        return redirect('companies')->with('success', 'Data have been succesfully updated!');
+        alert()->success('Success','Data have been succesfully updated!');
+        return redirect('companies');
     }
 
     /**
@@ -116,7 +120,8 @@ class CompanyController extends Controller
     public function destroy(Company $company)
     {
         $company->delete();
-        return redirect('companies')->with('success', 'Data have been succesfully moved to trash!');
+        alert()->success('Success','Data have been succesfully moved to trash!');
+        return redirect('companies');
     }
 
     public function trash()
@@ -136,7 +141,8 @@ class CompanyController extends Controller
             $companies->restore();
         }
 
-        return redirect('companies/trash')->with('success', 'Data have been successfully restored!');
+        alert()->success('Success','Data have been successfully restored!');
+        return redirect('companies/trash');
     }
 
     public function delete($slug = null)
@@ -150,6 +156,7 @@ class CompanyController extends Controller
             $companies->forceDelete();
         }
 
-        return redirect('companies/trash')->with('success', 'Data have been successfully deleted!');
+        alert()->success('Success','Data have been successfully deleted!');
+        return redirect('companies/trash');
     }
 }

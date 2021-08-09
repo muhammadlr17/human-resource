@@ -22,6 +22,7 @@
 </head>
 
 <body>
+    @include('sweetalert::alert')
     <!-- WRAPPER -->
     <div id="wrapper">
         {{-- <nav class="navbar navbar-default">

@@ -47,10 +47,12 @@ class DepartementController extends Controller
         try {
             Departement::create($data);
         } catch (Exception $exception) {
-            return redirect()->route('departements.create')->with('failed', 'Departement already exist!');
+            alert()->warning('Warning','Departement already exist!');
+            return redirect()->route('departements.create');
         }
 
-        return redirect('departements')->with('success', 'Data have been successfully saved!');
+        alert()->success('Success','Data have been successfully saved!');
+        return redirect('departements');
     }
 
     /**
@@ -89,10 +91,12 @@ class DepartementController extends Controller
         try {
             $departement->update($data);
         } catch (Exception $exception) {
-            return redirect()->route('departements.index')->with('failed', 'You cant edit to an existing Departement!');
+            alert()->warning('Warning','You cant edit to an existing Departement!');
+            return redirect()->route('departements.index');
         }
 
-        return redirect('departements')->with('success', 'Data have been successfully updated!');
+        alert()->success('Success','Data have been successfully updated!');
+        return redirect('departements');
     }
 
     /**
@@ -105,7 +109,8 @@ class DepartementController extends Controller
     {
         $departement->delete();
 
-        return redirect('departements')->with('success', 'Data have been moved to trash');
+        alert()->success('Success','Data have been moved to trash');
+        return redirect('departements');
     }
 
     public function trash()
@@ -125,7 +130,8 @@ class DepartementController extends Controller
             $departements->restore();
         }
 
-        return redirect('departements/trash')->with('success', 'Data have been successfully restored!');
+        alert()->success('Success','Data have been successfully restored!');
+        return redirect('departements/trash');
     }
 
     public function delete($slug = null)
@@ -137,6 +143,7 @@ class DepartementController extends Controller
             $departements->forceDelete();
         }
 
-        return redirect('departements/trash')->with('success', 'Data have been successfully deleted!');
+        alert()->success('Success','Data have been successfully deleted!');
+        return redirect('departements/trash');
     }
 }
