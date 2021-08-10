@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Exception;
@@ -119,9 +120,27 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
-        $company->delete();
+        $user = User::where('company_id', $company->id)->count();
+        if ($user > 0){
+            return response()
+                ->json(array(
+                    'error'   => true,
+                    'title'   => 'Denied',
+                    'message' => 'You cant remove this company, because this company still has employees'
+                ));
+        }else{
+            $company->delete();
+            return response()
+                ->json(array(
+                    'success' => true,
+                    'title'   => 'Success',
+                    'message' => 'Your file has been moved to trash!'
+                ));
+        }
+
+        /* $company->delete();
         alert()->success('Success','Data have been succesfully moved to trash!');
-        return redirect('companies');
+        return redirect('companies'); */
     }
 
     public function trash()
@@ -135,28 +154,55 @@ class CompanyController extends Controller
     public function restore($slug = null)
     {
         $companies = Company::onlyTrashed();
-        if ($slug != null) {
-            $companies->where('slug', $slug)->restore();
-        } else {
-            $companies->restore();
+        if($companies->count() == 0) {
+            alert()->success('Clear', 'Trash is empty!');
+            return redirect('companies/trash');
         }
 
-        alert()->success('Success','Data have been successfully restored!');
-        return redirect('companies/trash');
+        if ($slug != null) {
+            $companies->where('slug', $slug)->restore();
+            alert()->success('Success','Data have been successfully restored!');
+            return redirect('companies/trash');
+        } else {
+            $companies->restore();
+            alert()->success('Success','All data have been successfully restored!');
+            return redirect('companies/trash');
+        }
+
     }
 
     public function delete($slug = null)
     {
         $companies = Company::onlyTrashed();
+        if($companies->count() == 0) {
+            return response()
+                ->json(array(
+                    'success' => true,
+                    'title'   => 'Clear',
+                    'message' => 'Trash is empty!'
+                ));
+        }
+
         if ($slug != null) {
             $company = $companies->where('slug', $slug)->first();
             File::delete('image/logo/' . $company->logo);
             $company->forceDelete();
+            return response()
+                ->json(array(
+                    'success' => true,
+                    'title'   => 'Deleted',
+                    'message' => 'Data have been permananetly deleted!'
+            ));
         } else {
             $companies->forceDelete();
+            return response()
+                ->json(array(
+                    'success' => true,
+                    'title'   => 'Deleted',
+                    'message' => 'All data have been permananetly deleted!'
+            ));
         }
-
-        alert()->success('Success','Data have been successfully deleted!');
-        return redirect('companies/trash');
+        /* alert()->success('Success','Data have been successfully deleted!');
+        return redirect('companies/trash'); */
     }
 }

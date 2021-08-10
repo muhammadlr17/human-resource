@@ -44,13 +44,16 @@
         <div class="clearfix"></div>
         <footer>
             <div class="container-fluid">
-                <p class="copyright">&copy; 2021 <a href="" target="_blank">Muhammad Lutfi Ramadhan</a>.
+                <p class="copyright">&copy; 2021 <a href="https://instagram.com/lutfi_glanther" target="_blank">Muhammad
+                        Lutfi Ramadhan</a>.
                     All Rights Reserved.</p>
             </div>
         </footer>
     </div>
     <!-- END WRAPPER -->
     <!-- Javascript -->
+
+    <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>
     <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>

@@ -50,13 +50,15 @@
                                     <a href="{{ route('departements.edit', $departement) }}"
                                         class="btn btn-xs btn-warning text-light"><span
                                             class="lnr lnr-pencil"></span></a>
-                                    <form method="POST" action="{{ route('departements.destroy', $departement) }}"
+                                    {{-- <form method="POST" action="{{ route('departements.destroy', $departement) }}"
                                         style="display: inline" onsubmit="return confirm('Yakin hapus data?')">
                                         @csrf
                                         <input type="hidden" name="_method" value="DELETE">
                                         <button type="submit" class="btn btn-xs btn-danger"><span
                                                 class="lnr lnr-trash"></span></button>
-                                    </form>
+                                    </form> --}}
+                                    <button onclick="deleteItem(this)" data-slug="{{ $departement->slug }}"
+                                        class="btn btn-xs btn-danger"><i class="lnr lnr-trash"></i></button>
                                 </td>
                             </tr>
                         @endforeach
@@ -65,4 +67,5 @@
             </table>
         </div>
     </div>
+    @include('admin.departement.remove_script')
 @endsection

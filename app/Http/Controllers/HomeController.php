@@ -79,11 +79,11 @@ class HomeController extends Controller
                 alert()->success('Success','Change password successfully!');
                 return redirect("profile/reset/$username");
             } else {
-                alert()->error('ErrorAlert','Old password invalid!');
+                alert()->error('Error','Old password invalid!');
                 return redirect("profile/reset/$username");
             }
         } else {
-            alert()->error('ErrorAlert','User not Found');
+            alert()->error('Error','User not Found');
             return redirect('profile');
         }
 

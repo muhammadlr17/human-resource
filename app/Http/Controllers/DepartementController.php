@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\DepartementRequest;
 use App\Models\Departement;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Exception;
 
@@ -107,10 +108,25 @@ class DepartementController extends Controller
      */
     public function destroy(Departement $departement)
     {
-        $departement->delete();
-
-        alert()->success('Success','Data have been moved to trash');
-        return redirect('departements');
+        $user = User::where('departement_id', $departement->id)->count();
+        if ($user > 0){
+            return response()
+                ->json(array(
+                    'error'   => true,
+                    'title'   => 'Denied',
+                    'message' => 'You cant remove this department, because this department still has employees'
+                ));
+        }else{
+            $departement->delete();
+            return response()
+                ->json(array(
+                    'success' => true,
+                    'title'   => 'Removed',
+                    'message' => 'Your file has been moved to trash!'
+                ));
+        }
+        /* alert()->success('Success','Data have been moved to trash');
+        return redirect('departements'); */
     }
 
     public function trash()
@@ -124,26 +140,53 @@ class DepartementController extends Controller
     public function restore($slug = null)
     {
         $departements = Departement::onlyTrashed();
-        if ($slug != null) {
-            $departements->where('slug', $slug)->restore();
-        } else {
-            $departements->restore();
+        if ($departements->count() == 0) {
+            alert()->success('Clear', 'Trash is empty!');
+            return redirect('departements/trash');
         }
 
-        alert()->success('Success','Data have been successfully restored!');
-        return redirect('departements/trash');
+        if ($slug != null) {
+            $departements->where('slug', $slug)->restore();
+            alert()->success('Success','Data have been successfully restored!');
+            return redirect('departements/trash');
+        } else {
+            $departements->restore();
+            alert()->success('Success','All data have been successfully restored!');
+            return redirect('departements/trash');
+        }
+
     }
 
     public function delete($slug = null)
     {
         $departements = Departement::onlyTrashed();
-        if ($slug != null) {
-            $departements->where('slug', $slug)->forceDelete();
-        } else {
-            $departements->forceDelete();
+        if($departements->count() == 0) {
+            return response()
+                ->json(array(
+                    'success' => true,
+                    'title'   => 'Clear',
+                    'message' => 'Trash is empty!'
+                ));
         }
 
-        alert()->success('Success','Data have been successfully deleted!');
-        return redirect('departements/trash');
+        if ($slug != null) {
+            $departements->where('slug', $slug)->forceDelete();
+            return response()
+                ->json(array(
+                    'success' => true,
+                    'title'   => 'Deleted',
+                    'message' => 'Data have been permananetly deleted!'
+                ));
+        } else {
+            $departements->forceDelete();
+            return response()
+                ->json(array(
+                    'success' => true,
+                    'title' => 'Deleted',
+                    'message' => 'All data have been permananetly deleted!'
+                ));
+        }
+        /* alert()->success('Success','Data have been successfully deleted!');
+        return redirect('departements/trash'); */
     }
 }
