@@ -33,6 +33,11 @@
                         <ul class="nav">
                             <li><a href="{{ route('profile') }}" class="">Profile</a></li>
                         </ul>
+                        @if (Auth::user()->role == 'admin')
+                            <ul class="nav">
+                                <li><a href="{{ route('cleaner') }}" class="">Cleaner</a></li>
+                            </ul>
+                        @endif
                     </div>
                 </li>
             </ul>
