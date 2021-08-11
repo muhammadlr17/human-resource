@@ -31,8 +31,9 @@
                                 Swal.fire({
                                     title: 'Cleaning system ...',
                                     html: 'Cleaning will be completed in <b></b> milliseconds.',
-                                    timer: 2000,
+                                    timer: 1500,
                                     timerProgressBar: true,
+                                    allowOutsideClick: false,
                                     didOpen: () => {
                                         Swal.showLoading()
                                         const b = Swal.getHtmlContainer().querySelector(
