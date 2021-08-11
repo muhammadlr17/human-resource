@@ -25,7 +25,7 @@
 
                     $.ajax({
                         type: 'POST',
-                        url: "companies/" + username,
+                        url: "employees/" + username,
                         data: {
                             "_token": "{{ csrf_token() }}",
                             "_method": "DELETE",

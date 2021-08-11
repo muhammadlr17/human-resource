@@ -64,7 +64,7 @@
                                         <button type="submit" class="btn btn-xs btn-danger"><span
                                                 class="small lnr lnr-trash"></span></button>
                                     </form> --}}
-                                    <button onclick="deleteItem(this)" data-slug="{{ $employee->username }}"
+                                    <button onclick="deleteItem(this)" data-username="{{ $employee->username }}"
                                         class="btn btn-xs btn-danger"><i class="lnr lnr-trash"></i></button>
                                 </td>
                             </tr>

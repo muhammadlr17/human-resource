@@ -139,8 +139,12 @@ class EmployeeController extends Controller
     public function destroy(User $employee)
     {
         $employee->delete();
-        alert()->success('Success','Data have been succesfully moved to trash!');
-        return redirect('employees');
+        return response()
+                ->json(array(
+                    'success' => true,
+                    'title'   => 'Success',
+                    'message' => 'Your file has been moved to trash!'
+                ));
     }
 
     public function reset($username)
@@ -181,10 +185,18 @@ class EmployeeController extends Controller
     public function restore($username = null)
     {
         $employees = User::onlyTrashed();
+        if($employees->count() == 0) {
+            alert()->success('Clear', 'Trash is empty!');
+            return redirect('employees/trash');
+        }
         if ($username != null) {
             $employees->where('username', $username)->restore();
+            alert()->success('Success','Data have been successfully restored!');
+            return redirect('employees/trash');
         } else {
             $employees->restore();
+            alert()->success('Success','All data have been successfully restored!');
+            return redirect('employees/trash');
         }
 
         alert()->success('Success','Data have been successfully restored!');
@@ -194,14 +206,35 @@ class EmployeeController extends Controller
     public function delete($username = null)
     {
         $employees = User::onlyTrashed();
+        if($employees->count() == 0){
+            return response()
+                ->json(array(
+                    'success' => true,
+                    'title'   => 'Clear',
+                    'message' => 'Trash is empty!'
+                ));
+        }
         if ($username != null) {
-            $employees->where('username', $username)->forceDelete();
+            $employee = $employees->where('username', $username)->first();
+            File::delete('image/profile/' . $employee->photo);
+            $employee->forceDelete();
+            return response()
+                ->json(array(
+                    'success' => true,
+                    'title'   => 'Deleted',
+                    'message' => 'Data have been permananetly deleted!'
+            ));
         } else {
             $employees->forceDelete();
+            return response()
+                ->json(array(
+                    'success' => true,
+                    'title'   => 'Deleted',
+                    'message' => 'All data have been permananetly deleted!'
+            ));
         }
-
-        alert()->success('Success','Data have been successfully deleted!');
-        return redirect('employees/trash');
+        /* alert()->success('Success','Data have been successfully deleted!');
+        return redirect('employees/trash'); */
     }
 
 }
