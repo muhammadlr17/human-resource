@@ -138,13 +138,22 @@ class EmployeeController extends Controller
      */
     public function destroy(User $employee)
     {
-        $employee->delete();
-        return response()
-                ->json(array(
-                    'success' => true,
-                    'title'   => 'Success',
-                    'message' => 'Your file has been moved to trash!'
-                ));
+        if((auth()->user()->username) == $employee->username){
+            return response()
+                    ->json(array(
+                        'error' => true,
+                        'title'   => 'Warning',
+                        'message' => 'You cant delete a logged user!'
+                    ));
+        }else{
+            $employee->delete();
+            return response()
+                    ->json(array(
+                        'success' => true,
+                        'title'   => 'Success',
+                        'message' => 'Your file has been moved to trash!'
+                    ));
+        }
     }
 
     public function reset($username)
